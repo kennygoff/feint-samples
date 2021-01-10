@@ -1,0 +1,19 @@
+{
+  "name": "feint-samples",
+  "version": "0.0.0",
+  "description": "Demos, examples, and games for Feint",
+  "author": "Kenny Goff",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "lix download",
+    "arcade:brick-breaker": "cd arcade/brick-breaker && haxe compile.hxml && open build/web/index.html",
+    "benchmarks:overload": "cd benchmarks/overload && haxe compile.hxml && open build/web/index.html",
+    "showcase:forge-ecs": "cd showcase/forge-ecs && haxe compile.hxml && open build/web/index.html",
+    "showcase:sprites": "cd showcase/sprites && haxe compile.hxml && open build/web/index.html",
+    "snippets:hello-feint": "cd snippets/hello-feint && haxe compile.hxml && open build/web/index.html"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lix": "^15.9.1"
+  }
+}

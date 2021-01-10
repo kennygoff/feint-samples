@@ -1,0 +1,4 @@
+--library feint
+--debug
+--js build/web/bin/main.js
+--main HelloFeint
