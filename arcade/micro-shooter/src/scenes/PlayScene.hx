@@ -1,10 +1,14 @@
 package scenes;
 
+import systems.ShipDamageSystem;
+import components.HitboxComponent;
+import systems.ShipAutoShootingSystem;
+import systems.EnemySpawnSystem;
 import systems.BulletRecycleSystem;
 import systems.ShipGunSystem;
 import components.ShipGunComponent;
 import systems.BulletRenderSystem;
-import systems.BulletMomentumSystem;
+import systems.MomentumSystem;
 import feint.forge.Entity;
 import feint.graphics.Sprite;
 import feint.forge.Forge;
@@ -41,16 +45,25 @@ class PlayScene extends Scene {
     forge.addEntity(Entity.create(), [
       new SpriteComponent(shipSprite),
       new PositionComponent(game.window.width / 2 - 8, game.window.height - 80),
-      new ShipGunComponent(10 / 60 * 1000)
-    ]);
+      new ShipGunComponent(10 / 60 * 1000),
+      new HitboxComponent(3 * 3, 4 * 3, 10 * 3, 10 * 3)
+    ], ["player"]);
     forge.addSystem(new SpriteSystem());
     forge.addSystem(new ShipGunSystem());
     forge.addSystem(new PilotFlyingSystem(game.window.inputManager));
     forge.addSystem(new PilotShootingSystem(game.window.inputManager));
-    forge.addSystem(new BulletMomentumSystem());
+    forge.addSystem(new ShipAutoShootingSystem());
+    forge.addSystem(new MomentumSystem());
     forge.addSystem(new BulletRecycleSystem());
+    forge.addSystem(new EnemySpawnSystem());
+    forge.addSystem(new ShipDamageSystem());
     forge.addRenderSystem(new SpriteRenderSystem());
     forge.addRenderSystem(new BulletRenderSystem());
+    #if debug
+    forge.addRenderSystem(
+      new HitboxDebugRenderSystem(0xFF00FFFF, ['player' => 0xFF00FF00, 'enemy' => 0xFFFF0000])
+    );
+    #end
   }
 
   override function update(elapsed:Float) {

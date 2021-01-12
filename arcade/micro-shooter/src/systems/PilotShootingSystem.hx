@@ -1,5 +1,6 @@
 package systems;
 
+import components.HitboxComponent;
 import components.ShipGunComponent;
 import feint.forge.Entity;
 import components.VelocityComponent;
@@ -35,8 +36,9 @@ class PilotShootingSystem extends System {
     ) {
       forge.addEntity(Entity.create(), [
         new PositionComponent(ship.position.x + 20, ship.position.y - 16),
-        new VelocityComponent(0, -1000)
-      ], ["bullet"]);
+        new VelocityComponent(0, -600),
+        new HitboxComponent(0, 0, 8, 8)
+      ], ["bullet", "player"]);
 
       ship.gun.cooldown = ship.gun.fireRate;
       ship.gun.ready = false;

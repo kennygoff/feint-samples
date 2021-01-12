@@ -1,2 +1,8 @@
 # Builds
 build/
+
+# Node Dependencies (NPM/Yarn)
+node_modules/
+
+# Haxe Dependencies (Lix)
+haxe_libraries/
