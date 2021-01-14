@@ -27,10 +27,11 @@ class ShipAutoShootingSystem extends System {
 
     for (ship in ships) {
       if (ship.gun.ready) {
+        var width = 16 * 4;
         forge.addEntity(Entity.create(), [
-          new PositionComponent(ship.position.x + 20, ship.position.y - 16),
-          new VelocityComponent(0, 200),
-          new HitboxComponent(0, 0, 8, 8)
+          new PositionComponent(ship.position.x + (width / 2) - (12 / 2), ship.position.y + width),
+          new VelocityComponent(0, 300),
+          new HitboxComponent(0, 0, 12, 12)
         ], ["bullet", "enemy"]);
 
         ship.gun.cooldown = ship.gun.fireRate;

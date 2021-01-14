@@ -28,7 +28,6 @@ class EnemySpawnSystem extends System {
 
     if (shipEntities.length < 4) {
       var shipType = ["gambit", "storm", "beast"][Math.floor(Math.random() * 3)];
-      trace('Spawn ${shipType}');
       var shipSprite = new Sprite('enemies_sheet__png');
       shipSprite.textureWidth = 192;
       shipSprite.textureHeight = 16;
@@ -44,7 +43,7 @@ class EnemySpawnSystem extends System {
         new VelocityComponent(0, 30 + Math.random() * 20),
         new SpriteComponent(shipSprite),
         new ShipGunComponent(120 / 60 * 1000),
-        new HitboxComponent(1 * 3, 1 * 3, 14 * 3, 14 * 3)
+        new HitboxComponent(1 * 4, 1 * 4, 14 * 4, 14 * 4)
       ], ['enemy', 'ship']);
     }
   }

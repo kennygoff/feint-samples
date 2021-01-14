@@ -34,10 +34,11 @@ class PilotShootingSystem extends System {
         inputManager.keyboard.keys[KeyCode.X] == Pressed
       )
     ) {
+      var width = 16 * 4;
       forge.addEntity(Entity.create(), [
-        new PositionComponent(ship.position.x + 20, ship.position.y - 16),
-        new VelocityComponent(0, -600),
-        new HitboxComponent(0, 0, 8, 8)
+        new PositionComponent(ship.position.x + (width / 2) - (16 / 2), ship.position.y - 28),
+        new VelocityComponent(0, -800),
+        new HitboxComponent(0, 0, 16, 32)
       ], ["bullet", "player"]);
 
       ship.gun.cooldown = ship.gun.fireRate;

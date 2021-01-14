@@ -40,6 +40,7 @@ class ShipDamageSystem extends System {
         if (Physics.overlaps(friendlyBullet, enemyShip)) {
           forge.removeEntity(friendlyBullet.id);
           forge.removeEntity(enemyShip.id);
+          break;
         }
       }
     }
@@ -49,6 +50,7 @@ class ShipDamageSystem extends System {
         if (Physics.overlaps(enemyBullet, friendlyShip)) {
           forge.removeEntity(enemyBullet.id);
           trace('SPACE DEATH');
+          break;
         }
       }
     }

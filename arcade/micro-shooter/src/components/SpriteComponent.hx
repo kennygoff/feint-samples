@@ -71,7 +71,7 @@ class SpriteRenderSystem extends RenderSystem {
         Math.floor(sprite.position.x),
         Math.floor(sprite.position.y),
         renderer,
-        3
+        4
       );
     }
   }
