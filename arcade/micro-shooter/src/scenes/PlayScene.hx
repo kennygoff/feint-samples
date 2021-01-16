@@ -1,5 +1,12 @@
 package scenes;
 
+import systems.PilotBashSystem;
+import systems.ReaperSystem;
+import components.WaveComponent;
+import systems.ships.BeastShipSystem;
+import systems.ships.StormShipSystem;
+import systems.ships.GambitShipSystem;
+import systems.WaveSystem;
 import components.ShipShieldBashComponent;
 import systems.ShipHUDRenderSystem;
 import components.ui.UIPositionComponent;
@@ -64,6 +71,7 @@ class PlayScene extends Scene {
     uiShieldSprite.animation.play("0%", 0);
 
     forge = new Forge();
+    forge.addEntity(Entity.create(), [new WaveComponent()]);
     forge.addEntity(Entity.create(), [
       new SpriteComponent(shipSprite),
       new VelocityComponent(0, 0),
@@ -74,7 +82,7 @@ class PlayScene extends Scene {
       new HitboxComponent(3 * 4, 4 * 4, 10 * 4, 10 * 4),
       new ShipHealthComponent(100),
       new ShipShieldComponent(100),
-    ], ["player"]);
+    ], ["player", "ship"]);
     forge.addEntity(Entity.create(), [
       new SpriteComponent(uiHealthSprite),
       new UIPositionComponent(game.window.width - (64 * 2), (16 * 2) + (2 * 2))
@@ -85,15 +93,21 @@ class PlayScene extends Scene {
     ], ["player", "ui", "shield"]);
     forge.addSystem(new SpriteSystem());
     forge.addSystem(new ShipGunSystem());
+    forge.addSystem(new PilotBashSystem(game.window.inputManager));
     forge.addSystem(new PilotFlyingSystem(game.window.inputManager));
     forge.addSystem(new PilotShootingSystem(game.window.inputManager));
     // forge.addSystem(new ShipAutoShootingSystem());
     forge.addSystem(new MomentumSystem());
     forge.addSystem(new BulletRecycleSystem());
-    forge.addSystem(new EnemySpawnSystem());
+    forge.addSystem(new WaveSystem());
+    forge.addSystem(new GambitShipSystem());
+    forge.addSystem(new StormShipSystem());
+    forge.addSystem(new BeastShipSystem());
+    // forge.addSystem(new EnemySpawnSystem());
     forge.addSystem(new ShipDamageSystem());
+    forge.addSystem(new ReaperSystem());
     forge.addRenderSystem(new SpriteRenderSystem());
-    forge.addRenderSystem(new BulletRenderSystem());
+    // forge.addRenderSystem(new BulletRenderSystem());
     forge.addRenderSystem(new ShipHUDRenderSystem());
     #if (debug && false)
     forge.addRenderSystem(

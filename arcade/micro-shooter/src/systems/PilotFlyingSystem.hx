@@ -32,46 +32,6 @@ class PilotFlyingSystem extends System {
       shieldBash: forge.getEntityComponent(shipEntity, ShipShieldBashComponent)
     };
 
-    // TODO: Move to BashSystem
-    if (ship.shieldBash.isBashing) {
-      ship.shieldBash.cooldown -= elapsed;
-      if (ship.shieldBash.cooldown < 0) {
-        ship.shieldBash.cooldown = 0;
-        ship.shieldBash.isBashing = false;
-        ship.acceleration.x = 0;
-        ship.velocity.x *= 0.25;
-      }
-    }
-
-    // TODO: Move to BashSystem
-    final canShieldBash = ship.shields.shields >= 25 && !ship.shieldBash.isBashing;
-    if (canShieldBash && inputManager.keyboard.keys[KeyCode.Z] == JustPressed) {
-      if (inputManager.keyboard.keys[KeyCode.Left] == Pressed) {
-        ship.acceleration.x = 0;
-        ship.velocity.x = -600;
-        ship.sprite.sprite.animation.play("vertical:feint:left", 5);
-      } else if (inputManager.keyboard.keys[KeyCode.Right] == Pressed) {
-        ship.acceleration.x = 0;
-        ship.velocity.x = 600;
-        ship.sprite.sprite.animation.play("vertical:feint:right", 5);
-      } else if (ship.velocity.x < 0) {
-        ship.acceleration.x = 0;
-        ship.velocity.x = -600;
-        ship.sprite.sprite.animation.play("vertical:feint:left", 5);
-      } else if (ship.velocity.x > 0) {
-        ship.acceleration.x = 0;
-        ship.velocity.x = 600;
-        ship.sprite.sprite.animation.play("vertical:feint:right", 5);
-      } else {
-        ship.acceleration.x = 0;
-        ship.velocity.x = 600;
-        ship.sprite.sprite.animation.play("vertical:feint:right", 5);
-      }
-      ship.shields.shields = ship.shields.shields - 25;
-      ship.shieldBash.isBashing = true;
-      ship.shieldBash.cooldown = ship.shieldBash.bashRate;
-    }
-
     if (!ship.shieldBash.isBashing) {
       if (inputManager.keyboard.keys[KeyCode.Left] == JustPressed) {
         ship.acceleration.x = -100;
@@ -100,13 +60,13 @@ class PilotFlyingSystem extends System {
     ship.velocity.y += ship.acceleration.y;
 
     if (!ship.shieldBash.isBashing) {
-      ship.velocity.x = clamp(ship.velocity.x, -450, 450);
+      ship.velocity.x = feint.utils.Math.clamp(ship.velocity.x, -450, 450);
     }
 
     ship.position.x += ship.velocity.x * (elapsed / 1000);
     ship.position.y += ship.velocity.y * (elapsed / 1000);
 
-    ship.position.x = clamp(ship.position.x, 0, 640 - (16 * 4));
+    ship.position.x = feint.utils.Math.clamp(ship.position.x, 0, 640 - (16 * 4));
 
     // Animate
     if (!ship.shieldBash.isBashing) {
@@ -124,15 +84,5 @@ class PilotFlyingSystem extends System {
         ship.sprite.sprite.animation.play("vertical:idle", 100);
       }
     }
-  }
-
-  function clamp(num:Float, min:Float, max:Float) {
-    if (num < min) {
-      return min;
-    }
-    if (num > max) {
-      return max;
-    }
-    return num;
   }
 }

@@ -64,7 +64,7 @@ class SpriteRenderSystem extends RenderSystem {
         sprite: forge.getEntityComponent(entityId, SpriteComponent),
         position: forge.getEntityComponent(entityId, PositionComponent)
       }
-    });
+    }).filter(sprite -> sprite.sprite.sprite.alpha > 0);
 
     for (sprite in sprites) {
       sprite.sprite.sprite.drawAt(

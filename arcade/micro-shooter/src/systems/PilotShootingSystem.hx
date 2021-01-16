@@ -1,5 +1,6 @@
 package systems;
 
+import feint.graphics.Sprite;
 import components.HitboxComponent;
 import components.ShipGunComponent;
 import feint.forge.Entity;
@@ -36,13 +37,26 @@ class PilotShootingSystem extends System {
     ) {
       var width = 16 * 4;
       forge.addEntity(Entity.create(), [
-        new PositionComponent(ship.position.x + (width / 2) - (16 / 2), ship.position.y - 28),
+        new SpriteComponent(createBulletSprite()),
+        new PositionComponent(
+          ship.position.x + (width / 2) - ((16 * 4) / 2),
+          ship.position.y - (16 * 4) + (8 * 4)
+        ),
         new VelocityComponent(0, -800),
-        new HitboxComponent(0, 0, 16, 32)
+        new HitboxComponent(6 * 4, 4 * 4, 4 * 4, 8 * 4)
       ], ["bullet", "player"]);
 
       ship.gun.cooldown = ship.gun.fireRate;
       ship.gun.ready = false;
     }
+  }
+
+  function createBulletSprite() {
+    var bulletSprite = new Sprite('bullets_sheet__png');
+    bulletSprite.textureWidth = 320;
+    bulletSprite.textureHeight = 16;
+    bulletSprite.setupSpriteSheetAnimation(16, 16, ["shoot" => [0], "hit" => [1, 2]]);
+    bulletSprite.animation.play("shoot", 10);
+    return bulletSprite;
   }
 }
