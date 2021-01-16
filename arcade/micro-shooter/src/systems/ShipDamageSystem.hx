@@ -1,5 +1,9 @@
 package systems;
 
+import components.DropHealComponent;
+import components.DropShieldsComponent;
+import feint.graphics.Sprite;
+import feint.forge.Entity;
 import components.ShipHealthComponent;
 import components.ShipShieldBashComponent;
 import components.VelocityComponent;
@@ -97,6 +101,25 @@ class ShipDamageSystem extends System {
           enemyShip.hitbox.height = 0;
           enemyShip.velocity.x = 0;
           enemyShip.velocity.y = 0;
+          if (true) {
+            if (Math.random() < 0.5) {
+              forge.addEntity(Entity.create(), [
+                new DropShieldsComponent(25),
+                new PositionComponent(enemyShip.position.x, enemyShip.position.y),
+                new SpriteComponent(createDropComponent('shield')),
+                new HitboxComponent(4 * 4, 4 * 4, 8 * 4, 8 * 4),
+                new VelocityComponent(0, 50)
+              ]);
+            } else {
+              forge.addEntity(Entity.create(), [
+                new DropHealComponent(20),
+                new PositionComponent(enemyShip.position.x, enemyShip.position.y),
+                new SpriteComponent(createDropComponent('heal')),
+                new HitboxComponent(4 * 4, 4 * 4, 8 * 4, 8 * 4),
+                new VelocityComponent(0, 50)
+              ]);
+            }
+          }
           break;
         }
       }
@@ -175,5 +198,18 @@ class ShipDamageSystem extends System {
         enemyShip.sprite.sprite.alpha = 1;
       }
     }
+  }
+
+  function createDropComponent(anim:String) {
+    var shipSprite = new Sprite('drops_sheet__png');
+    shipSprite.textureWidth = 128;
+    shipSprite.textureHeight = 16;
+    shipSprite.setupSpriteSheetAnimation(
+      16,
+      16,
+      ["heal" => [0, 1, 2, 3], "shield" => [4, 5, 6, 7]]
+    );
+    shipSprite.animation.play(anim, 8, true);
+    return shipSprite;
   }
 }

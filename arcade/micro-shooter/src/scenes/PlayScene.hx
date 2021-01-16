@@ -1,5 +1,6 @@
 package scenes;
 
+import systems.PickupDropSystem;
 import systems.PilotBashSystem;
 import systems.ReaperSystem;
 import components.WaveComponent;
@@ -105,11 +106,12 @@ class PlayScene extends Scene {
     forge.addSystem(new BeastShipSystem());
     // forge.addSystem(new EnemySpawnSystem());
     forge.addSystem(new ShipDamageSystem());
+    forge.addSystem(new PickupDropSystem());
     forge.addSystem(new ReaperSystem());
     forge.addRenderSystem(new SpriteRenderSystem());
     // forge.addRenderSystem(new BulletRenderSystem());
     forge.addRenderSystem(new ShipHUDRenderSystem());
-    #if (debug && false)
+    #if (debug)
     forge.addRenderSystem(
       new HitboxDebugRenderSystem(0xFF00FFFF, ['player' => 0xFF00FF00, 'enemy' => 0xFFFF0000])
     );
