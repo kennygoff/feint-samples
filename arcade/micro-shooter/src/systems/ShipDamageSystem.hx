@@ -1,5 +1,6 @@
 package systems;
 
+import components.PointsComponent;
 import components.DropHealComponent;
 import components.DropShieldsComponent;
 import feint.graphics.Sprite;
@@ -60,6 +61,10 @@ class ShipDamageSystem extends System {
       sprite: forge.getEntityComponent(entityId, SpriteComponent),
       velocity: forge.getEntityComponent(entityId, VelocityComponent)
     }).filter(asteroid -> asteroid.soul.alive);
+    var points = forge.getEntityComponent(
+      forge.getEntities([PointsComponent]).shift(),
+      PointsComponent
+    );
 
     for (friendlyShip in friendlyShips) {
       if (friendlyShip.bash.isBashing) {
@@ -77,6 +82,8 @@ class ShipDamageSystem extends System {
             enemyShip.hitbox.height = 0;
             enemyShip.velocity.x = 0;
             enemyShip.velocity.y = 0;
+
+            points.points += 50;
 
             // Health regen
             friendlyShip.health.health = feint.utils.Math.clamp(
@@ -101,7 +108,10 @@ class ShipDamageSystem extends System {
           enemyShip.hitbox.height = 0;
           enemyShip.velocity.x = 0;
           enemyShip.velocity.y = 0;
-          if (true) {
+
+          points.points += 25;
+
+          if (Math.random() < 0.2) {
             if (Math.random() < 0.5) {
               forge.addEntity(Entity.create(), [
                 new DropShieldsComponent(25),
@@ -115,7 +125,7 @@ class ShipDamageSystem extends System {
                 new DropHealComponent(20),
                 new PositionComponent(enemyShip.position.x, enemyShip.position.y),
                 new SpriteComponent(createDropComponent('heal')),
-                new HitboxComponent(4 * 4, 4 * 4, 8 * 4, 8 * 4),
+                new HitboxComponent(5 * 4, 4 * 4, 7 * 4, 7 * 4),
                 new VelocityComponent(0, 50)
               ]);
             }
@@ -129,9 +139,21 @@ class ShipDamageSystem extends System {
       for (friendlyShip in friendlyShips) {
         if (!friendlyShip.bash.isBashing && Physics.overlaps(enemyBullet, friendlyShip)) {
           forge.removeEntity(enemyBullet.id);
-          friendlyShip.health.health -= 10;
+          friendlyShip.health.health = feint.utils.Math.clamp(
+            friendlyShip.health.health - 10,
+            0,
+            100
+          );
           friendlyShip.health.hurtFrames = 24;
           break;
+        }
+      }
+    }
+
+    for (asteroid in asteroids) {
+      for (friendlyBullet in friendlyBullets) {
+        if (Physics.overlaps(asteroid, friendlyBullet)) {
+          forge.removeEntity(friendlyBullet.id);
         }
       }
     }
@@ -148,7 +170,11 @@ class ShipDamageSystem extends System {
             asteroid.hitbox.height = 0;
             asteroid.velocity.x = 0;
             asteroid.velocity.y = 0;
-            friendlyShip.health.health -= 10;
+            friendlyShip.health.health = feint.utils.Math.clamp(
+              friendlyShip.health.health - 20,
+              0,
+              100
+            );
             friendlyShip.health.hurtFrames = 24;
             break;
           } else {
@@ -160,6 +186,8 @@ class ShipDamageSystem extends System {
             asteroid.hitbox.height = 0;
             asteroid.velocity.x = 0;
             asteroid.velocity.y = 0;
+
+            points.points += 100;
 
             // Health regen
             friendlyShip.health.health = feint.utils.Math.clamp(

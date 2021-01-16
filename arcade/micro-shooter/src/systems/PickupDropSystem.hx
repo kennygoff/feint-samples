@@ -44,9 +44,7 @@ class PickupDropSystem extends System {
         forge.removeEntity(shieldDrop.id);
         break;
       }
-      trace(shieldDrop);
       if (Physics.overlaps(shieldDrop, cast ship)) {
-        trace(shieldDrop);
         ship.shields.shields = feint.utils.Math.clamp(
           ship.shields.shields + shieldDrop.shieldDrop.shields,
           0,
@@ -61,9 +59,7 @@ class PickupDropSystem extends System {
         forge.removeEntity(healDrop.id);
         break;
       }
-      trace(healDrop);
       if (Physics.overlaps(healDrop, cast ship)) {
-        trace(healDrop);
         ship.health.health = feint.utils.Math.clamp(
           ship.health.health + healDrop.healDrop.heal,
           0,

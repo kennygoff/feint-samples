@@ -86,7 +86,7 @@ class WaveSystem extends System {
           new PositionComponent(Math.random() * 640, 0),
           new VelocityComponent(0, 80 + Math.random() * 20),
           new SpriteComponent(asteroidSprite),
-          new HitboxComponent(1 * 4, 1 * 4, 14 * 4, 14 * 4),
+          new HitboxComponent(2 * 4, 2 * 4, 12 * 4, 12 * 4),
           new SoulComponent()
         ], ['asteroid']);
       }

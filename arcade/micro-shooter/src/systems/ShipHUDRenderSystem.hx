@@ -1,5 +1,6 @@
 package systems;
 
+import components.PointsComponent;
 import components.SpriteComponent;
 import components.ui.UIPositionComponent;
 import components.ShipShieldComponent;
@@ -22,6 +23,10 @@ class ShipHUDRenderSystem extends RenderSystem {
     ).shift();
     var shipEntity = forge.getEntities([ShipHealthComponent, ShipShieldComponent], ['player'])
       .shift();
+    var points = forge.getEntityComponent(
+      forge.getEntities([PointsComponent]).shift(),
+      PointsComponent
+    );
 
     var ship = {
       id: shipEntity,
@@ -62,5 +67,6 @@ class ShipHUDRenderSystem extends RenderSystem {
     );
     healthUI.sprite.sprite.drawAt(healthUI.position.x, healthUI.position.y, renderer, 2);
     shieldUI.sprite.sprite.drawAt(shieldUI.position.x, shieldUI.position.y, renderer, 2);
+    renderer.drawText(320, 0, '${points.points}', 32, '"kenney_mini", sans-serif');
   }
 }

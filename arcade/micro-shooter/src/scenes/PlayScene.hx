@@ -1,5 +1,6 @@
 package scenes;
 
+import components.PointsComponent;
 import systems.PickupDropSystem;
 import systems.PilotBashSystem;
 import systems.ReaperSystem;
@@ -92,6 +93,7 @@ class PlayScene extends Scene {
       new SpriteComponent(uiShieldSprite),
       new UIPositionComponent(game.window.width - (64 * 2), (4 * 2))
     ], ["player", "ui", "shield"]);
+    forge.addEntity(Entity.create(), [new PointsComponent()]);
     forge.addSystem(new SpriteSystem());
     forge.addSystem(new ShipGunSystem());
     forge.addSystem(new PilotBashSystem(game.window.inputManager));
@@ -111,7 +113,7 @@ class PlayScene extends Scene {
     forge.addRenderSystem(new SpriteRenderSystem());
     // forge.addRenderSystem(new BulletRenderSystem());
     forge.addRenderSystem(new ShipHUDRenderSystem());
-    #if (debug)
+    #if (debug && false)
     forge.addRenderSystem(
       new HitboxDebugRenderSystem(0xFF00FFFF, ['player' => 0xFF00FF00, 'enemy' => 0xFFFF0000])
     );
