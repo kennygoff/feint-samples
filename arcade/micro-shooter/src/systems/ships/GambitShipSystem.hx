@@ -1,5 +1,7 @@
 package systems.ships;
 
+import feint.audio.AudioFile;
+import feint.assets.Assets;
 import components.HitboxComponent;
 import feint.graphics.Sprite;
 import components.SpriteComponent;
@@ -12,7 +14,11 @@ import feint.forge.Forge;
 import feint.forge.System;
 
 class GambitShipSystem extends System {
-  public function new() {}
+  var shootSound:AudioFile;
+
+  public function new() {
+    this.shootSound = new AudioFile(Assets.laserSmall_003__ogg);
+  }
 
   override function update(elapsed:Float, forge:Forge) {
     var shipEntities = forge.getEntities([PositionComponent], ['enemy', 'ship', 'gambit']);
@@ -71,12 +77,14 @@ class GambitShipSystem extends System {
 
         ship.gun.cooldown = ship.gun.fireRate;
         ship.gun.ready = false;
+
+        shootSound.play();
       }
     }
   }
 
   function createBulletSprite() {
-    var bulletSprite = new Sprite('bullets_sheet__png');
+    var bulletSprite = new Sprite(Assets.bullets_sheet__png);
     bulletSprite.textureWidth = 320;
     bulletSprite.textureHeight = 16;
     bulletSprite.setupSpriteSheetAnimation(16, 16, ["shoot" => [3], "hit" => [4, 5]]);

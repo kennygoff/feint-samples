@@ -1,5 +1,6 @@
 package systems;
 
+import feint.assets.Assets;
 import components.HitboxComponent;
 import components.ShipGunComponent;
 import components.SpriteComponent;
@@ -31,7 +32,7 @@ class EnemySpawnSystem extends System {
 
     if (shipEntities.length < 4) {
       var shipType = ["gambit", "storm", "beast"][Math.floor(Math.random() * 3)];
-      var shipSprite = new Sprite('enemies_sheet__png');
+      var shipSprite = new Sprite(Assets.enemies_sheet__png);
       shipSprite.textureWidth = 192;
       shipSprite.textureHeight = 16;
       shipSprite.setupSpriteSheetAnimation(

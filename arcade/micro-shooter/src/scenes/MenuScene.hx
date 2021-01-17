@@ -1,5 +1,7 @@
 package scenes;
 
+import feint.audio.AudioFile;
+import feint.assets.Assets;
 import components.ui.UIPositionComponent;
 import components.SpriteComponent;
 import components.ui.SimpleMenuComponent;
@@ -14,11 +16,12 @@ class MenuScene extends Scene {
   var forge:Forge;
   var selected:Int;
   var shipSelectSprite:Sprite;
+  var menuSelectSound:AudioFile;
 
   override function init() {
     super.init();
 
-    shipSelectSprite = new Sprite('shooter_sheet__png');
+    shipSelectSprite = new Sprite(Assets.shooter_sheet__png);
     shipSelectSprite.textureWidth = 160;
     shipSelectSprite.textureHeight = 16;
     shipSelectSprite.setupSpriteSheetAnimation(16, 16, [
@@ -48,6 +51,8 @@ class MenuScene extends Scene {
     forge.addSystem(new SpriteSystem());
     forge.addRenderSystem(new SimpleMenuRenderSystem(game.window));
     forge.addRenderSystem(new UISpriteRenderSystem(game.window));
+
+    menuSelectSound = new AudioFile(Assets.powerUp12__ogg);
   }
 
   override function update(elapsed:Float) {
@@ -56,6 +61,7 @@ class MenuScene extends Scene {
     forge.update(elapsed);
 
     if (game.window.inputManager.keyboard.keys[KeyCode.Enter] == JustPressed) {
+      menuSelectSound.play();
       game.changeScene(new PlayScene());
       return;
     }

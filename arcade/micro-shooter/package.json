@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "lix download",
+    "build": "haxe build.hxml",
     "watch": "haxe build.hxml && fswatch -o src | xargs -n1 -I{} haxe build.hxml",
     "serve": "parcel build/web/index.html -d build/web/parcel/output --cache-dir build/web/parcel/cache"
   },

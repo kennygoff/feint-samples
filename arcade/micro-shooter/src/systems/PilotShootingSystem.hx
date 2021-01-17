@@ -1,5 +1,7 @@
 package systems;
 
+import feint.audio.AudioFile;
+import feint.assets.Assets;
 import feint.graphics.Sprite;
 import components.HitboxComponent;
 import components.ShipGunComponent;
@@ -14,9 +16,11 @@ import feint.forge.System;
 
 class PilotShootingSystem extends System {
   var inputManager:InputManager;
+  var shootSound:AudioFile;
 
   public function new(inputManager:InputManager) {
     this.inputManager = inputManager;
+    this.shootSound = new AudioFile(Assets.laserRetro_000__ogg, 0.1);
   }
 
   override function update(elapsed:Float, forge:Forge) {
@@ -48,11 +52,13 @@ class PilotShootingSystem extends System {
 
       ship.gun.cooldown = ship.gun.fireRate;
       ship.gun.ready = false;
+
+      shootSound.play();
     }
   }
 
   function createBulletSprite() {
-    var bulletSprite = new Sprite('bullets_sheet__png');
+    var bulletSprite = new Sprite(Assets.bullets_sheet__png);
     bulletSprite.textureWidth = 320;
     bulletSprite.textureHeight = 16;
     bulletSprite.setupSpriteSheetAnimation(16, 16, ["shoot" => [0], "hit" => [1, 2]]);

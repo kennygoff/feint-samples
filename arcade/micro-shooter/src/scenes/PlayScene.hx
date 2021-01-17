@@ -1,5 +1,6 @@
 package scenes;
 
+import feint.assets.Assets;
 import systems.ships.CyclopsShipSystem;
 import components.PointsComponent;
 import systems.PickupDropSystem;
@@ -40,7 +41,7 @@ class PlayScene extends Scene {
   override function init() {
     super.init();
 
-    shipSprite = new Sprite('shooter_sheet__png');
+    shipSprite = new Sprite(Assets.shooter_sheet__png);
     shipSprite.textureWidth = 320;
     shipSprite.textureHeight = 16;
     shipSprite.setupSpriteSheetAnimation(16, 16, [
@@ -52,7 +53,7 @@ class PlayScene extends Scene {
       "horizontal:coast" => [5, 6, 7, 6, 5, 8, 9, 8]]);
     shipSprite.animation.play("vertical:idle", 10);
 
-    var uiHealthSprite = new Sprite('ui_health_sheet__png');
+    var uiHealthSprite = new Sprite(Assets.ui_health_sheet__png);
     uiHealthSprite.textureWidth = 704;
     uiHealthSprite.textureHeight = 16;
     uiHealthSprite.setupSpriteSheetAnimation(64, 16, [
@@ -60,7 +61,7 @@ class PlayScene extends Scene {
       "60%" => [6], "70%" => [7], "80%" => [8], "90%" => [9], "100%" => [10]]);
     uiHealthSprite.animation.play("0%", 0);
 
-    var uiShieldSprite = new Sprite('ui_shield_sheet__png');
+    var uiShieldSprite = new Sprite(Assets.ui_shield_sheet__png);
     uiShieldSprite.textureWidth = 320;
     uiShieldSprite.textureHeight = 16;
     uiShieldSprite.setupSpriteSheetAnimation(

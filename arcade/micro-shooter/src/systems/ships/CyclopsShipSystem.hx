@@ -1,5 +1,7 @@
 package systems.ships;
 
+import feint.audio.AudioFile;
+import feint.assets.Assets;
 import components.HitboxComponent;
 import feint.graphics.Sprite;
 import components.SpriteComponent;
@@ -12,7 +14,11 @@ import feint.forge.Forge;
 import feint.forge.System;
 
 class CyclopsShipSystem extends System {
-  public function new() {}
+  var shootSound:AudioFile;
+
+  public function new() {
+    this.shootSound = new AudioFile(Assets.laserRetro_004__ogg);
+  }
 
   override function update(elapsed:Float, forge:Forge) {
     var shipEntities = forge.getEntities([PositionComponent], ['enemy', 'ship', 'cyclops']);
@@ -68,12 +74,14 @@ class CyclopsShipSystem extends System {
 
         ship.gun.cooldown = ship.gun.fireRate;
         ship.gun.ready = false;
+
+        shootSound.play();
       }
     }
   }
 
   function createBulletSprite() {
-    var bulletSprite = new Sprite('bullets_sheet__png');
+    var bulletSprite = new Sprite(Assets.bullets_sheet__png);
     bulletSprite.textureWidth = 320;
     bulletSprite.textureHeight = 16;
     bulletSprite.setupSpriteSheetAnimation(16, 16, ["shoot" => [17], "hit" => [13, 12]]);

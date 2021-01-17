@@ -1,5 +1,7 @@
 package systems;
 
+import feint.audio.AudioFile;
+import feint.assets.Assets;
 import components.WaveComponent;
 import components.PointsComponent;
 import components.DropHealComponent;
@@ -18,7 +20,13 @@ import feint.forge.Forge;
 import feint.forge.System;
 
 class ShipDamageSystem extends System {
-  public function new() {}
+  var friendlyDamageSound:AudioFile;
+  var enemyDamageSound:AudioFile;
+
+  public function new() {
+    this.friendlyDamageSound = new AudioFile(Assets.explosionCrunch_004__ogg);
+    this.enemyDamageSound = new AudioFile(Assets.explosionCrunch_000__ogg);
+  }
 
   override function update(elapsed:Float, forge:Forge) {
     var friendlyShipEntities = forge.getEntities([PositionComponent], ['player', 'ship']);
@@ -88,6 +96,8 @@ class ShipDamageSystem extends System {
 
             points.points += 50;
 
+            enemyDamageSound.play();
+
             // Health regen
             friendlyShip.health.health = feint.utils.Math.clamp(
               friendlyShip.health.health + 10,
@@ -116,6 +126,8 @@ class ShipDamageSystem extends System {
           wave.kills++;
           wave.waveKills++;
           // TODO: Ideally only register the kill after the death anim, or at least only act on it then
+
+          enemyDamageSound.play();
 
           if (Math.random() < 0.2) {
             if (Math.random() < 0.5) {
@@ -151,6 +163,7 @@ class ShipDamageSystem extends System {
             100
           );
           friendlyShip.health.hurtFrames = 24;
+          friendlyDamageSound.play();
           break;
         }
       }
@@ -190,6 +203,7 @@ class ShipDamageSystem extends System {
               100
             );
             friendlyShip.health.hurtFrames = 24;
+            friendlyDamageSound.play();
             break;
           } else {
             asteroid.soul.alive = false;
@@ -202,6 +216,7 @@ class ShipDamageSystem extends System {
             asteroid.velocity.y = 0;
 
             points.points += 100;
+            enemyDamageSound.play();
 
             // Health regen
             friendlyShip.health.health = feint.utils.Math.clamp(
@@ -243,7 +258,7 @@ class ShipDamageSystem extends System {
   }
 
   function createDropComponent(anim:String) {
-    var shipSprite = new Sprite('drops_sheet__png');
+    var shipSprite = new Sprite(Assets.drops_sheet__png);
     shipSprite.textureWidth = 128;
     shipSprite.textureHeight = 16;
     shipSprite.setupSpriteSheetAnimation(

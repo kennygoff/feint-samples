@@ -1,5 +1,7 @@
 package systems;
 
+import feint.audio.AudioFile;
+import feint.assets.Assets;
 import utils.Physics;
 import components.ShipShieldComponent;
 import components.ShipHealthComponent;
@@ -11,7 +13,13 @@ import feint.forge.Forge;
 import feint.forge.System;
 
 class PickupDropSystem extends System {
-  public function new() {}
+  var pickupHealSound:AudioFile;
+  var pickupShieldSound:AudioFile;
+
+  public function new() {
+    this.pickupHealSound = new AudioFile(Assets.powerUp2__ogg);
+    this.pickupShieldSound = new AudioFile(Assets.powerUp7__ogg);
+  }
 
   override function update(elapsed:Float, forge:Forge) {
     var healDropEntities = forge.getEntities([DropHealComponent]);
@@ -51,6 +59,7 @@ class PickupDropSystem extends System {
           100
         );
         forge.removeEntity(shieldDrop.id);
+        pickupShieldSound.play();
       }
     }
 
@@ -66,6 +75,7 @@ class PickupDropSystem extends System {
           100
         );
         forge.removeEntity(healDrop.id);
+        pickupHealSound.play();
       }
     }
   }

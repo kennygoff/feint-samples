@@ -1,5 +1,6 @@
 package systems;
 
+import feint.assets.Assets;
 import components.DropHealComponent;
 import feint.renderer.Renderer;
 import components.ShipHealthComponent;
@@ -89,7 +90,7 @@ class WaveSystem extends System {
   }
 
   function createAsteroidSprite() {
-    var asteroidSprite = new Sprite('asteroids_sheet__png');
+    var asteroidSprite = new Sprite(Assets.asteroids_sheet__png);
     asteroidSprite.textureWidth = 336;
     asteroidSprite.textureHeight = 16;
     asteroidSprite.setupSpriteSheetAnimation(
@@ -101,7 +102,7 @@ class WaveSystem extends System {
   }
 
   function createShipSprite() {
-    var shipSprite = new Sprite('enemies_sheet__png');
+    var shipSprite = new Sprite(Assets.enemies_sheet__png);
     shipSprite.textureWidth = 400;
     shipSprite.textureHeight = 16;
     shipSprite.setupSpriteSheetAnimation(16, 16, [
