@@ -220,7 +220,7 @@ class ShipDamageSystem extends System {
 
             // Health regen
             friendlyShip.health.health = feint.utils.Math.clamp(
-              friendlyShip.health.health + 10,
+              friendlyShip.health.health + 40,
               0,
               100
             );
