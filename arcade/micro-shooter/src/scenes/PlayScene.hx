@@ -19,12 +19,9 @@ import components.AccelerationComponent;
 import components.VelocityComponent;
 import systems.ShipDamageSystem;
 import components.HitboxComponent;
-import systems.ShipAutoShootingSystem;
-import systems.EnemySpawnSystem;
 import systems.BulletRecycleSystem;
 import systems.ShipGunSystem;
 import components.ShipGunComponent;
-import systems.BulletRenderSystem;
 import systems.MomentumSystem;
 import feint.forge.Entity;
 import feint.graphics.Sprite;
@@ -74,7 +71,7 @@ class PlayScene extends Scene {
     uiShieldSprite.animation.play("0%", 0);
 
     forge = new Forge();
-    forge.addEntity(Entity.create(), [new WaveComponent()]);
+    forge.addEntity(Entity.create(), [new WaveComponent(3000)]);
     forge.addEntity(Entity.create(), [
       new SpriteComponent(shipSprite),
       new VelocityComponent(0, 0),
@@ -100,7 +97,6 @@ class PlayScene extends Scene {
     forge.addSystem(new PilotBashSystem(game.window.inputManager));
     forge.addSystem(new PilotFlyingSystem(game.window.inputManager));
     forge.addSystem(new PilotShootingSystem(game.window.inputManager));
-    // forge.addSystem(new ShipAutoShootingSystem());
     forge.addSystem(new MomentumSystem());
     forge.addSystem(new BulletRecycleSystem());
     forge.addSystem(new WaveSystem());
@@ -108,14 +104,13 @@ class PlayScene extends Scene {
     forge.addSystem(new StormShipSystem());
     forge.addSystem(new BeastShipSystem());
     forge.addSystem(new CyclopsShipSystem());
-    // forge.addSystem(new EnemySpawnSystem());
     forge.addSystem(new ShipDamageSystem());
     forge.addSystem(new PickupDropSystem());
     forge.addSystem(new ReaperSystem());
     forge.addRenderSystem(new SpriteRenderSystem());
-    // forge.addRenderSystem(new BulletRenderSystem());
+    forge.addRenderSystem(new WaveRenderSystem());
     forge.addRenderSystem(new ShipHUDRenderSystem());
-    #if (debug && true)
+    #if (debug && false)
     forge.addRenderSystem(
       new HitboxDebugRenderSystem(0xFF00FFFF, ['player' => 0xFF00FF00, 'enemy' => 0xFFFF0000])
     );

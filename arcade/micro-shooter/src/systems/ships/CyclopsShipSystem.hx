@@ -25,8 +25,10 @@ class CyclopsShipSystem extends System {
 
     for (ship in ships) {
       // Movement
-      if (ship.position.y < 80) {
-        ship.velocity.y = 16;
+      if (ship.position.y < 24) {
+        ship.velocity.y = 40;
+      } else if (ship.position.y < 80) {
+        ship.velocity.y = 80;
       } else {
         ship.velocity.y = 0;
         if (ship.position.x <= 10) {

@@ -11,15 +11,22 @@ class WaveComponent extends Component {
   public var ready:Bool;
   public var active:Bool;
   public var cooldown:Float;
+  public var waitTime:Int;
+  public var waveKills:Int;
+  public var kills:Int;
+  public var waveShips:Int;
 
-  public function new() {
-    this.currentWave = 0;
-    this.shipsRemaining = 0;
-    this.maxConcurrentShips = 0;
-    this.asteroidsRemaining = 0;
+  public function new(waitTime:Int) {
+    this.currentWave = 1;
+    this.shipsRemaining = 2;
+    this.waveShips = 2;
+    this.maxConcurrentShips = 2;
     this.maxConcurrentAsteroids = 0;
     this.ready = false;
     this.active = false;
-    this.cooldown = 0;
+    this.cooldown = waitTime;
+    this.waitTime = waitTime;
+    this.waveKills = 0;
+    this.kills = 0;
   }
 }

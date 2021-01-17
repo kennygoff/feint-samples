@@ -1,5 +1,6 @@
 package systems;
 
+import components.WaveComponent;
 import components.PointsComponent;
 import components.DropHealComponent;
 import components.DropShieldsComponent;
@@ -65,6 +66,8 @@ class ShipDamageSystem extends System {
       forge.getEntities([PointsComponent]).shift(),
       PointsComponent
     );
+    final waveEntity = forge.getEntities([WaveComponent]).shift();
+    final wave = forge.getEntityComponent(waveEntity, WaveComponent);
 
     for (friendlyShip in friendlyShips) {
       if (friendlyShip.bash.isBashing) {
@@ -110,6 +113,9 @@ class ShipDamageSystem extends System {
           enemyShip.velocity.y = 0;
 
           points.points += 25;
+          wave.kills++;
+          wave.waveKills++;
+          // TODO: Ideally only register the kill after the death anim, or at least only act on it then
 
           if (Math.random() < 0.2) {
             if (Math.random() < 0.5) {
@@ -118,7 +124,7 @@ class ShipDamageSystem extends System {
                 new PositionComponent(enemyShip.position.x, enemyShip.position.y),
                 new SpriteComponent(createDropComponent('shield')),
                 new HitboxComponent(2 * 4, 2 * 4, 12 * 4, 12 * 4),
-                new VelocityComponent(0, 50)
+                new VelocityComponent(0, 75)
               ]);
             } else {
               forge.addEntity(Entity.create(), [
@@ -126,7 +132,7 @@ class ShipDamageSystem extends System {
                 new PositionComponent(enemyShip.position.x, enemyShip.position.y),
                 new SpriteComponent(createDropComponent('heal')),
                 new HitboxComponent(3 * 4, 2 * 4, 11 * 4, 11 * 4),
-                new VelocityComponent(0, 50)
+                new VelocityComponent(0, 100)
               ]);
             }
           }

@@ -25,10 +25,14 @@ class BeastShipSystem extends System {
 
     for (ship in ships) {
       // Movement
-      ship.velocity.y = 35;
+      if (ship.position.y < 24) {
+        ship.velocity.y = 40;
+      } else {
+        ship.velocity.y = 35;
+      }
 
       // Shooting
-      if (ship.gun.ready) {
+      if (ship.gun.ready && ship.position.y >= 24) {
         var bulletWidth = 10 * 4;
         var bulletSpriteWidth = 16 * 4;
         forge.addEntity(Entity.create(), [

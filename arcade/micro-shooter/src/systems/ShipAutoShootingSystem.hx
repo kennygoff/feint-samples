@@ -11,6 +11,9 @@ import feint.input.InputManager;
 import feint.forge.Forge;
 import feint.forge.System;
 
+/**
+ * @deprecated
+ */
 class ShipAutoShootingSystem extends System {
   public function new() {}
 

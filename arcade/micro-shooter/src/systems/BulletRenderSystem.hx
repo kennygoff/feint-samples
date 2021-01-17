@@ -6,6 +6,9 @@ import feint.renderer.Renderer;
 import feint.forge.Forge;
 import feint.forge.System.RenderSystem;
 
+/**
+ * @deprecated
+ */
 class BulletRenderSystem extends RenderSystem {
   public function new() {}
 

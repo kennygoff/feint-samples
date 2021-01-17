@@ -10,6 +10,9 @@ import components.PositionComponent;
 import feint.forge.Forge;
 import feint.forge.System;
 
+/**
+ * @deprecated
+ */
 class EnemySpawnSystem extends System {
   public function new() {}
 

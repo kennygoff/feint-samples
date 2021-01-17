@@ -1,5 +1,7 @@
 package systems;
 
+import components.DropHealComponent;
+import feint.renderer.Renderer;
 import components.ShipHealthComponent;
 import components.SoulComponent;
 import components.HitboxComponent;
@@ -29,27 +31,15 @@ class WaveSystem extends System {
       position: forge.getEntityComponent(entityId, PositionComponent)
     });
 
-    if (!wave.active && !wave.ready) {
-      if (wave.cooldown <= 0) {
-        wave.cooldown = 0;
-        wave.ready = true;
-      }
-    }
-
     if (!wave.active) {
       if (wave.ready) {
-        wave.currentWave++;
-        switch (wave.currentWave) {
-          case 1:
-            wave.maxConcurrentShips = 2;
-            wave.shipsRemaining = 2;
-            wave.maxConcurrentAsteroids = 2;
-            wave.asteroidsRemaining = 2;
-          default:
-            wave.maxConcurrentShips = 0;
-            wave.maxConcurrentAsteroids = 0;
-        }
+        wave.cooldown = wave.waitTime;
         wave.active = true;
+      } else {
+        wave.cooldown -= elapsed;
+        if (wave.cooldown <= 0) {
+          wave.ready = true;
+        }
       }
     }
 
@@ -65,7 +55,7 @@ class WaveSystem extends System {
         var fireRate = ["gambit" => 1500, "storm" => 2000, "beast" => 3000, "cyclops" => 4000];
         shipSprite.animation.play(shipType, 10, true);
         forge.addEntity(Entity.create(), [
-          new PositionComponent(Math.random() * 640, 0),
+          new PositionComponent(20 + Math.random() * (600 - (16 * 4)), 0),
           new VelocityComponent(0, 30 + Math.random() * 20),
           new SpriteComponent(shipSprite),
           new ShipGunComponent(fireRate[shipType]),
@@ -84,13 +74,17 @@ class WaveSystem extends System {
         var asteroidType = ["0", "1", "2", "3"][Math.floor(Math.random() * 4)];
         asteroidSprite.animation.play(asteroidType, 10, true);
         forge.addEntity(Entity.create(), [
-          new PositionComponent(Math.random() * 640, 0),
+          new PositionComponent(20 + Math.random() * (600 - (16 * 4)), 0),
           new VelocityComponent(0, 80 + Math.random() * 20),
           new SpriteComponent(asteroidSprite),
           new HitboxComponent(2 * 4, 2 * 4, 12 * 4, 12 * 4),
           new SoulComponent()
         ], ['asteroid']);
       }
+    }
+
+    if (wave.active && wave.waveKills >= wave.waveShips) {
+      clearWave(wave, forge);
     }
   }
 
@@ -120,5 +114,61 @@ class WaveSystem extends System {
       "death:bashed:right" => [22, 23, 24]
     ]);
     return shipSprite;
+  }
+
+  function clearWave(wave:WaveComponent, forge:Forge) {
+    // Cleanup entities
+    var bullets = forge.getEntities([PositionComponent], ['bullet']);
+    for (bullet in bullets) {
+      forge.removeEntity(bullet);
+    }
+    var enemyShips = forge.getEntities([PositionComponent], ['enemy', 'ship']);
+    for (enemyShip in enemyShips) {
+      forge.removeEntity(enemyShip);
+    }
+    var asteroids = forge.getEntities([PositionComponent], ['asteroid']);
+    for (asteroid in asteroids) {
+      forge.removeEntity(asteroid);
+    }
+
+    // Setup next wave
+    wave.currentWave++;
+    wave.active = false;
+    wave.ready = false;
+    wave.cooldown = wave.waitTime;
+    wave.waveKills = 0;
+    wave.waveShips += 2; // +2 ship every wave
+    wave.maxConcurrentShips = Math.floor((wave.currentWave - 1) / 3) + 2; // +1 ship every 3th wave
+    wave.maxConcurrentAsteroids = Math.floor((wave.currentWave - 1) / 5); // +1 ship every 5th wave
+  }
+}
+
+class WaveRenderSystem extends RenderSystem {
+  public function new() {}
+
+  override function render(renderer:Renderer, forge:Forge) {
+    final waveEntity = forge.getEntities([WaveComponent]).shift();
+    final wave = forge.getEntityComponent(waveEntity, WaveComponent);
+
+    if (!wave.active) {
+      renderer.drawText(
+        Math.floor(640 / 2),
+        Math.floor(640 / 2 - 32),
+        'Wave ${wave.currentWave}',
+        64,
+        '"kenney_mini", sans-serif',
+        Center
+      );
+    }
+
+    #if (debug && false)
+    renderer.drawText(
+      0,
+      64,
+      'Wave ${wave.currentWave}, ${wave.active}, ${wave.ready}; ${wave.maxConcurrentShips}, ${wave.maxConcurrentAsteroids}',
+      16,
+      '"kenney_mini", sans-serif'
+    );
+    #end
   }
 }

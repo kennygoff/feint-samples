@@ -25,16 +25,22 @@ class StormShipSystem extends System {
 
     for (ship in ships) {
       // Movement
-      if (ship.position.x <= 10) {
-        ship.velocity.x = 200;
-      } else if (ship.position.x >= 640 - 10 - (16 * 4)) {
-        ship.velocity.x = -200;
-      } else if (ship.velocity.x == 0) {
-        ship.velocity.x = ship.position.x < 320 - (8 * 4) ? 200 : -200;
+      if (ship.position.y < 24) {
+        ship.velocity.x = 0;
+        ship.velocity.y = 40;
+      } else {
+        if (ship.position.x <= 10) {
+          ship.velocity.x = 200;
+        } else if (ship.position.x >= 640 - 10 - (16 * 4)) {
+          ship.velocity.x = -200;
+        } else if (ship.velocity.x == 0) {
+          ship.velocity.x = ship.position.x < 320 - (8 * 4) ? 200 : -200;
+        }
+        ship.velocity.y = 35;
       }
 
       // Shooting
-      if (ship.gun.ready) {
+      if (ship.gun.ready && ship.position.y >= 24) {
         var bulletWidth = 2 * 4;
         var bulletSpriteWidth = 16 * 4;
         forge.addEntity(Entity.create(), [

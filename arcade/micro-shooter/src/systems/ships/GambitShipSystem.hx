@@ -25,22 +25,26 @@ class GambitShipSystem extends System {
 
     for (ship in ships) {
       // Movement
-      if (ship.position.x <= 10) {
-        ship.velocity.x = 100;
-        if (ship.velocity.x < 0) {
-          ship.velocity.y += 25;
+      if (ship.position.y < 24) {
+        ship.velocity.y = 40;
+      } else {
+        if (ship.position.x <= 10) {
+          ship.velocity.x = 100;
+          if (ship.velocity.x < 0) {
+            ship.velocity.y += 25;
+          }
+        } else if (ship.position.x >= 640 - 10 - (16 * 4)) {
+          ship.velocity.x = -100;
+          if (ship.velocity.x > 0) {
+            ship.velocity.y += 25;
+          }
+        } else if (ship.velocity.x == 0) {
+          ship.velocity.x = ship.position.x < 320 - (8 * 4) ? 100 : -100;
         }
-      } else if (ship.position.x >= 640 - 10 - (16 * 4)) {
-        ship.velocity.x = -100;
-        if (ship.velocity.x > 0) {
-          ship.velocity.y += 25;
-        }
-      } else if (ship.velocity.x == 0) {
-        ship.velocity.x = ship.position.x < 320 - (8 * 4) ? 100 : -100;
       }
 
       // Shooting
-      if (ship.gun.ready) {
+      if (ship.gun.ready && ship.position.y >= 24) {
         var bulletWidth = 4 * 4;
         var bulletSpriteWidth = 16 * 4;
         forge.addEntity(Entity.create(), [
