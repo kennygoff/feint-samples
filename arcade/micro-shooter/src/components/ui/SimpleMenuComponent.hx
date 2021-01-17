@@ -15,11 +15,13 @@ class SimpleMenuComponent extends Component {
   public var name:String;
   public var focused:Bool;
   public var order:Int;
+  public var callback:() -> Void;
 
-  public function new(name:String, order:Int, focused:Bool = false) {
+  public function new(name:String, order:Int, focused:Bool = false, ?callback:() -> Void) {
     this.name = name;
     this.order = order;
     this.focused = focused;
+    this.callback = callback;
   }
 }
 
@@ -48,6 +50,10 @@ class SimpleMenuSystem extends System {
       navigate(options, selectionSpritePosition, 1);
     } else if (inputManager.keyboard.keys[KeyCode.Up] == JustPressed) {
       navigate(options, selectionSpritePosition, -1);
+    } else if (inputManager.keyboard.keys[KeyCode.Enter] == JustPressed) {
+      if (options.find(option -> option.focused).callback != null) {
+        options.find(option -> option.focused).callback();
+      }
     }
   }
 

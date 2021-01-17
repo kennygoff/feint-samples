@@ -12,11 +12,22 @@ import feint.input.device.Keyboard.KeyCode;
 import feint.renderer.Renderer;
 import feint.scene.Scene;
 
-class MenuScene extends Scene {
+class GameOverScene extends Scene {
   var forge:Forge;
   var selected:Int;
   var shipSelectSprite:Sprite;
   var menuSelectSound:AudioFile;
+  var score:Int;
+  var kills:Int;
+  var wave:Int;
+
+  public function new(score:Int, kills:Int, wave:Int) {
+    super();
+
+    this.score = score;
+    this.kills = kills;
+    this.wave = wave;
+  }
 
   override function init() {
     super.init();
@@ -45,9 +56,14 @@ class MenuScene extends Scene {
       )
     ]);
     forge.addEntity(Entity.create(), [
-      new SimpleMenuComponent('Play', 0, true, () -> {
+      new SimpleMenuComponent('Retry', 0, true, () -> {
         menuSelectSound.play();
         game.changeScene(new PlayScene());
+      })
+    ]);
+    forge.addEntity(Entity.create(), [
+      new SimpleMenuComponent('Exit', 1, false, () -> {
+        game.changeScene(new MenuScene());
       })
     ]);
     forge.addSystem(new SimpleMenuSystem(game.window.inputManager, game.window));
@@ -72,17 +88,8 @@ class MenuScene extends Scene {
 
     renderer.drawText(
       Math.floor(game.window.width / 2),
-      104,
-      'feint micro arcade',
-      24,
-      '"kenney_mini", sans-serif',
-      Center
-    );
-
-    renderer.drawText(
-      Math.floor(game.window.width / 2),
       128,
-      'SHOOTER',
+      'GAME OVER',
       64,
       '"kenney_mini", sans-serif',
       Center
@@ -90,36 +97,25 @@ class MenuScene extends Scene {
 
     renderer.drawText(
       Math.floor(game.window.width / 2),
-      game.window.height - 128,
-      'CONTROLS',
-      16,
+      128 + 64,
+      'Score: ${score}',
+      32,
       '"kenney_mini", sans-serif',
       Center
     );
-
     renderer.drawText(
       Math.floor(game.window.width / 2),
-      game.window.height - 112,
-      'ARROWS to MOVE',
-      24,
+      128 + 96,
+      'Kills: ${kills}',
+      32,
       '"kenney_mini", sans-serif',
       Center
     );
-
     renderer.drawText(
       Math.floor(game.window.width / 2),
-      game.window.height - 88,
-      'X to SHOOT',
-      24,
-      '"kenney_mini", sans-serif',
-      Center
-    );
-
-    renderer.drawText(
-      Math.floor(game.window.width / 2),
-      game.window.height - 64,
-      '[LEFT/RIGHT]+Z to SHIELD BASH',
-      24,
+      128 + 128,
+      'Final wave: ${wave}',
+      32,
       '"kenney_mini", sans-serif',
       Center
     );

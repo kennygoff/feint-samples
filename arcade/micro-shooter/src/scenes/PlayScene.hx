@@ -122,6 +122,22 @@ class PlayScene extends Scene {
     super.update(elapsed);
 
     forge.update(elapsed);
+
+    var health = forge.getEntityComponent(
+      forge.getEntities([ShipHealthComponent], ['player']).shift(),
+      ShipHealthComponent
+    );
+    if (health.health <= 0 && health.hurtFrames <= 0) {
+      var wave = forge.getEntityComponent(
+        forge.getEntities([WaveComponent]).shift(),
+        WaveComponent
+      );
+      var points = forge.getEntityComponent(
+        forge.getEntities([PointsComponent]).shift(),
+        PointsComponent
+      );
+      game.changeScene(new GameOverScene(points.points, wave.kills, wave.currentWave));
+    }
   }
 
   override public function render(renderer:Renderer) {
