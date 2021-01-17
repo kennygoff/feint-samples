@@ -1,5 +1,6 @@
 package scenes;
 
+import systems.ships.CyclopsShipSystem;
 import components.PointsComponent;
 import systems.PickupDropSystem;
 import systems.PilotBashSystem;
@@ -81,7 +82,7 @@ class PlayScene extends Scene {
       new PositionComponent(game.window.width / 2 - 8, game.window.height - 80),
       new ShipGunComponent(20 / 60 * 1000),
       new ShipShieldBashComponent((1 / 60) * (5 * 5) * 1000),
-      new HitboxComponent(3 * 4, 4 * 4, 10 * 4, 10 * 4),
+      new HitboxComponent(5 * 4, 3 * 4, 6 * 4, 10 * 4),
       new ShipHealthComponent(100),
       new ShipShieldComponent(100),
     ], ["player", "ship"]);
@@ -106,6 +107,7 @@ class PlayScene extends Scene {
     forge.addSystem(new GambitShipSystem());
     forge.addSystem(new StormShipSystem());
     forge.addSystem(new BeastShipSystem());
+    forge.addSystem(new CyclopsShipSystem());
     // forge.addSystem(new EnemySpawnSystem());
     forge.addSystem(new ShipDamageSystem());
     forge.addSystem(new PickupDropSystem());
@@ -113,7 +115,7 @@ class PlayScene extends Scene {
     forge.addRenderSystem(new SpriteRenderSystem());
     // forge.addRenderSystem(new BulletRenderSystem());
     forge.addRenderSystem(new ShipHUDRenderSystem());
-    #if (debug && false)
+    #if (debug && true)
     forge.addRenderSystem(
       new HitboxDebugRenderSystem(0xFF00FFFF, ['player' => 0xFF00FF00, 'enemy' => 0xFFFF0000])
     );

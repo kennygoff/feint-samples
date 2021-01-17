@@ -117,7 +117,7 @@ class ShipDamageSystem extends System {
                 new DropShieldsComponent(25),
                 new PositionComponent(enemyShip.position.x, enemyShip.position.y),
                 new SpriteComponent(createDropComponent('shield')),
-                new HitboxComponent(4 * 4, 4 * 4, 8 * 4, 8 * 4),
+                new HitboxComponent(2 * 4, 2 * 4, 12 * 4, 12 * 4),
                 new VelocityComponent(0, 50)
               ]);
             } else {
@@ -125,7 +125,7 @@ class ShipDamageSystem extends System {
                 new DropHealComponent(20),
                 new PositionComponent(enemyShip.position.x, enemyShip.position.y),
                 new SpriteComponent(createDropComponent('heal')),
-                new HitboxComponent(5 * 4, 4 * 4, 7 * 4, 7 * 4),
+                new HitboxComponent(3 * 4, 2 * 4, 11 * 4, 11 * 4),
                 new VelocityComponent(0, 50)
               ]);
             }
@@ -154,6 +154,14 @@ class ShipDamageSystem extends System {
       for (friendlyBullet in friendlyBullets) {
         if (Physics.overlaps(asteroid, friendlyBullet)) {
           forge.removeEntity(friendlyBullet.id);
+        }
+      }
+    }
+
+    for (asteroid in asteroids) {
+      for (enemyBullet in enemyBullets) {
+        if (Physics.overlaps(asteroid, enemyBullet)) {
+          forge.removeEntity(enemyBullet.id);
         }
       }
     }

@@ -63,8 +63,8 @@ class PilotFlyingSystem extends System {
       ship.velocity.x = feint.utils.Math.clamp(ship.velocity.x, -450, 450);
     }
 
-    ship.position.x += ship.velocity.x * (elapsed / 1000);
-    ship.position.y += ship.velocity.y * (elapsed / 1000);
+    // ship.position.x += ship.velocity.x * (elapsed / 1000);
+    // ship.position.y += ship.velocity.y * (elapsed / 1000);
 
     ship.position.x = feint.utils.Math.clamp(ship.position.x, 0, 640 - (16 * 4));
 

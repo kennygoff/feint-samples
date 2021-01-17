@@ -16,6 +16,7 @@ class MomentumSystem extends System {
     });
 
     for (object in movingObjects) {
+      object.position.x += object.velocity.x * (elapsed / 1000);
       object.position.y += object.velocity.y * (elapsed / 1000);
     }
   }

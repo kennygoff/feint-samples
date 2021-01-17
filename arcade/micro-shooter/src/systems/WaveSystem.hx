@@ -41,8 +41,8 @@ class WaveSystem extends System {
         wave.currentWave++;
         switch (wave.currentWave) {
           case 1:
-            wave.maxConcurrentShips = 10;
-            wave.shipsRemaining = 10;
+            wave.maxConcurrentShips = 2;
+            wave.shipsRemaining = 2;
             wave.maxConcurrentAsteroids = 2;
             wave.asteroidsRemaining = 2;
           default:
@@ -62,16 +62,17 @@ class WaveSystem extends System {
       if (ships.length < wave.maxConcurrentShips) {
         var shipSprite = createShipSprite();
         var shipType = ["gambit", "storm", "beast", "cyclops"][Math.floor(Math.random() * 4)];
+        var fireRate = ["gambit" => 1500, "storm" => 2000, "beast" => 3000, "cyclops" => 4000];
         shipSprite.animation.play(shipType, 10, true);
         forge.addEntity(Entity.create(), [
           new PositionComponent(Math.random() * 640, 0),
           new VelocityComponent(0, 30 + Math.random() * 20),
           new SpriteComponent(shipSprite),
-          new ShipGunComponent(120 / 60 * 1000),
+          new ShipGunComponent(fireRate[shipType]),
           new HitboxComponent(1 * 4, 1 * 4, 14 * 4, 14 * 4),
           new SoulComponent(),
           new ShipHealthComponent(0)
-        ], ['enemy', 'ship']);
+        ], ['enemy', 'ship', shipType]);
       }
       for (asteroid in asteroids) {
         if (asteroid.position.y > 640) {
