@@ -1,5 +1,7 @@
 package scenes;
 
+import feint.assets.Assets;
+
 using Lambda;
 
 import feint.input.device.Keyboard.KeyCode;
@@ -12,13 +14,13 @@ class OverloadScene extends Scene {
   var sprites:Array<Sprite> = [];
 
   override public function init() {
-    for (i in 0...3000) {
-      var sprite = new Sprite('kenney-character-spritesheet');
+    for (i in 0...1000) {
+      var sprite = new Sprite(Assets.platformerPack_character__png);
       // TODO: Automate this!
       sprite.textureWidth = 384;
       sprite.textureHeight = 192;
       sprite.setupSpriteSheetAnimation(96, 96, ['idle' => [0], 'jump' => [1], 'run' => [2, 3]]);
-      sprite.animation.play('run', 30);
+      sprite.animation.play('run', 30, true);
       sprites.push(sprite);
     }
   }
@@ -27,13 +29,15 @@ class OverloadScene extends Scene {
     super.update(elapsed);
 
     for (sprite in sprites) {
-      sprite.animation.update();
+      if (!Math.isNaN(elapsed)) {
+        sprite.animation.update();
+      }
     }
   }
 
   override public function render(renderer:Renderer) {
     // Render background
-    renderer.drawRect(0, 0, game.window.width, game.window.height, {color: backgroundColor});
+    // renderer.drawRect(0, 0, game.window.width, game.window.height, {color: backgroundColor});
 
     super.render(renderer);
 

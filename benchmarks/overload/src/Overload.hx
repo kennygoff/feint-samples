@@ -17,7 +17,8 @@ class Overload extends Application {
       size: {
         width: 640,
         height: 360
-      }
+      },
+      api: Canvas
     });
   }
 }
