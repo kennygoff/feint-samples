@@ -259,7 +259,7 @@ class ShipDamageSystem extends System {
 
   function createDropComponent(anim:String) {
     var shipSprite = new Sprite(Assets.drops_sheet__png);
-    shipSprite.textureWidth = 128;
+    shipSprite.textureWidth = 192;
     shipSprite.textureHeight = 16;
     shipSprite.setupSpriteSheetAnimation(
       16,

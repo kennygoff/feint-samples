@@ -14,7 +14,8 @@ class MicroShooter extends Application {
       size: {
         width: 640,
         height: 640
-      }
+      },
+      api: WebGL
     });
   }
 }

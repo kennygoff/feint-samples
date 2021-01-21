@@ -85,7 +85,7 @@ class GambitShipSystem extends System {
 
   function createBulletSprite() {
     var bulletSprite = new Sprite(Assets.bullets_sheet__png);
-    bulletSprite.textureWidth = 320;
+    bulletSprite.textureWidth = 304;
     bulletSprite.textureHeight = 16;
     bulletSprite.setupSpriteSheetAnimation(16, 16, ["shoot" => [3], "hit" => [4, 5]]);
     bulletSprite.animation.play("shoot", 10);

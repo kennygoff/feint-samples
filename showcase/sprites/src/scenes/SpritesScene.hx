@@ -1,5 +1,7 @@
 package scenes;
 
+import feint.assets.Assets;
+
 using Lambda;
 
 import feint.input.device.Keyboard.KeyCode;
@@ -12,12 +14,12 @@ class SpritesScene extends Scene {
   var sprite:Sprite;
 
   override public function init() {
-    sprite = new Sprite('kenney-character-spritesheet');
+    sprite = new Sprite(Assets.platformerPack_character__png);
     // TODO: Automate this!
     sprite.textureWidth = 384;
     sprite.textureHeight = 192;
     sprite.setupSpriteSheetAnimation(96, 96, ['idle' => [0], 'jump' => [1], 'run' => [2, 3]]);
-    sprite.animation.play('run', 30);
+    sprite.animation.play('run', 30, true);
   }
 
   override public function update(elapsed:Float) {
@@ -32,19 +34,24 @@ class SpritesScene extends Scene {
 
     super.render(renderer);
 
-    renderer.drawImage(0, 0, 'kenney-character');
-    renderer.drawImage(150, 0, 'kenney-character-spritesheet', {
+    renderer.drawImage(0, 0, Assets.platformChar_happy__png, {
       x: 0,
       y: 0,
       width: 96,
       height: 96
-    });
-    renderer.drawImage(300, 0, 'kenney-character-spritesheet', {
+    }, 1, 96, 96);
+    renderer.drawImage(150, 0, Assets.platformerPack_character__png, {
+      x: 0,
+      y: 0,
+      width: 96,
+      height: 96
+    }, 1, 384, 192);
+    renderer.drawImage(300, 0, Assets.platformerPack_character__png, {
       x: 192,
       y: 0,
       width: 96,
       height: 96
-    }, 1.5);
+    }, 1.5, 384, 192);
 
     sprite.drawAt(200, 200, renderer);
   }
