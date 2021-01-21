@@ -1,5 +1,7 @@
 --library feint
 --class-path src
 --debug
+-D feint:clean
+--macro feint.assets.macros.AssetBuilder.buildWeb()
 --js build/web/bin/main.js
 --main ForgeECS

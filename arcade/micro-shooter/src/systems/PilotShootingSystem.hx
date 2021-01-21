@@ -59,7 +59,7 @@ class PilotShootingSystem extends System {
 
   function createBulletSprite() {
     var bulletSprite = new Sprite(Assets.bullets_sheet__png);
-    bulletSprite.textureWidth = 320;
+    bulletSprite.textureWidth = 304;
     bulletSprite.textureHeight = 16;
     bulletSprite.setupSpriteSheetAnimation(16, 16, ["shoot" => [0], "hit" => [1, 2]]);
     bulletSprite.animation.play("shoot", 10);

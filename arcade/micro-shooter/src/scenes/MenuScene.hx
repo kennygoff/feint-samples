@@ -22,7 +22,7 @@ class MenuScene extends Scene {
     super.init();
 
     shipSelectSprite = new Sprite(Assets.shooter_sheet__png);
-    shipSelectSprite.textureWidth = 160;
+    shipSelectSprite.textureWidth = 320;
     shipSelectSprite.textureHeight = 16;
     shipSelectSprite.setupSpriteSheetAnimation(16, 16, [
       "vertical:idle" => [0],

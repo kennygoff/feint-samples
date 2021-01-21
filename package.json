@@ -6,13 +6,13 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "lix download",
-    "arcade:brick-breaker": "cd arcade/brick-breaker && haxe compile.hxml && open build/web/index.html",
+    "arcade:brick-breaker": "cd arcade/brick-breaker && haxe compile.hxml && browser-sync start -s --ss build/web -f build/web --no-notify --port 2000",
     "arcade:micro-shooter:watch": "cd arcade/micro-shooter && haxe build.hxml && fswatch -o src | xargs -n1 -I{} haxe build.hxml",
     "arcade:micro-shooter:serve": "cd arcade/micro-shooter && parcel build/web/index.html -d build/web/parcel/output --cache-dir build/web/parcel/cache",
     "benchmarks:overload": "cd benchmarks/overload && haxe compile.hxml && browser-sync start -s --ss build/web -f build/web --no-notify --port 2000",
-    "showcase:forge-ecs": "cd showcase/forge-ecs && haxe compile.hxml && open build/web/index.html",
-    "showcase:sprites": "cd showcase/sprites && haxe compile.hxml && open build/web/index.html",
-    "snippets:hello-feint": "cd snippets/hello-feint && haxe compile.hxml && open build/web/index.html"
+    "showcase:forge-ecs": "cd showcase/forge-ecs && haxe compile.hxml && browser-sync start -s --ss build/web -f build/web --no-notify --port 2000",
+    "showcase:sprites": "cd showcase/sprites && haxe compile.hxml && browser-sync start -s --ss build/web -f build/web --no-notify --port 2000",
+    "snippets:hello-feint": "cd snippets/hello-feint && haxe compile.hxml && browser-sync start -s --ss build/web -f build/web --no-notify --port 2000"
   },
   "dependencies": {},
   "devDependencies": {

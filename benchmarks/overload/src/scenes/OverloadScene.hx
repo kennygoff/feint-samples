@@ -14,7 +14,7 @@ class OverloadScene extends Scene {
   var sprites:Array<Sprite> = [];
 
   override public function init() {
-    for (i in 0...1000) {
+    for (i in 0...100) {
       var sprite = new Sprite(Assets.platformerPack_character__png);
       // TODO: Automate this!
       sprite.textureWidth = 384;
