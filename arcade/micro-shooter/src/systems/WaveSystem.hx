@@ -91,7 +91,7 @@ class WaveSystem extends System {
 
   function createAsteroidSprite() {
     var asteroidSprite = new Sprite(Assets.asteroids_sheet__png);
-    asteroidSprite.textureWidth = 336;
+    asteroidSprite.textureWidth = 128;
     asteroidSprite.textureHeight = 16;
     asteroidSprite.setupSpriteSheetAnimation(
       16,
