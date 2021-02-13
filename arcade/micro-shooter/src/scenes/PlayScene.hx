@@ -35,7 +35,6 @@ import systems.PilotShootingSystem;
 import systems.PilotFlyingSystem;
 
 class PlayScene extends Scene {
-  var forge:Forge;
   var shipSprite:Sprite;
 
   override function init() {
@@ -71,7 +70,6 @@ class PlayScene extends Scene {
     );
     uiShieldSprite.animation.play("0%", 0);
 
-    forge = new Forge();
     forge.addEntity(Entity.create(), [new WaveComponent(3000)]);
     forge.addEntity(Entity.create(), [
       new SpriteComponent(shipSprite),
@@ -121,8 +119,6 @@ class PlayScene extends Scene {
   override function update(elapsed:Float) {
     super.update(elapsed);
 
-    forge.update(elapsed);
-
     var health = forge.getEntityComponent(
       forge.getEntities([ShipHealthComponent], ['player']).shift(),
       ShipHealthComponent
@@ -142,11 +138,9 @@ class PlayScene extends Scene {
 
   override public function render(renderer:Renderer) {
     // Render background
-    renderer.drawRect(0, 0, game.window.width, game.window.height, {color: 0xFF000000});
+    renderer.drawRect(0, 0, game.window.width, game.window.height, 0, 0xFF000000);
 
     super.render(renderer);
-
-    forge.render(renderer);
 
     // Render FPS
     renderer.drawText(4, 4, 'FPS: ${game.fps}', 16, '"kenney_mini", sans-serif');

@@ -8,12 +8,10 @@ import components.ui.SimpleMenuComponent;
 import feint.forge.Entity;
 import feint.forge.Forge;
 import feint.graphics.Sprite;
-import feint.input.device.Keyboard.KeyCode;
 import feint.renderer.Renderer;
 import feint.scene.Scene;
 
 class GameOverScene extends Scene {
-  var forge:Forge;
   var selected:Int;
   var shipSelectSprite:Sprite;
   var menuSelectSound:AudioFile;
@@ -47,7 +45,6 @@ class GameOverScene extends Scene {
     ]);
     shipSelectSprite.animation.play("horizontal:coast", 10, true);
 
-    forge = new Forge();
     forge.addEntity(Entity.create(), [
       new SpriteComponent(shipSelectSprite),
       new UIPositionComponent(
@@ -74,17 +71,9 @@ class GameOverScene extends Scene {
     menuSelectSound = new AudioFile(Assets.powerUp12__ogg);
   }
 
-  override function update(elapsed:Float) {
-    super.update(elapsed);
-
-    forge.update(elapsed);
-  }
-
   override public function render(renderer:Renderer) {
     // Render background
-    renderer.drawRect(0, 0, game.window.width, game.window.height, {color: 0xFF000000});
-
-    super.render(renderer);
+    renderer.drawRect(0, 0, game.window.width, game.window.height, 0, 0xFF000000);
 
     renderer.drawText(
       Math.floor(game.window.width / 2),
