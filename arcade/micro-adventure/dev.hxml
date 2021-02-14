@@ -1,0 +1,8 @@
+--library feint
+--class-path src
+-D feint:clean
+-D feint:appTitle=Micro Arcade
+--js build/electron/bin/main.js
+--main MicroAdventure
+-lib electron
+--debug

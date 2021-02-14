@@ -1,0 +1,19 @@
+{
+  "name": "micro-adventure",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Kenny Goff",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "lix download",
+    "build": "haxe build.hxml",
+    "build:electron": "haxe build.electron.hxml",
+    "watch": "haxe build.hxml && fswatch -o src | xargs -n1 -I{} haxe build.hxml"
+  },
+  "devDependencies": {
+    "lix": "^15.10.1"
+  },
+  "dependencies": {
+    "electron": "^11.2.3"
+  }
+}

@@ -1,0 +1,8 @@
+{
+"version":3,
+"file":"feint-electron.js",
+"sourceRoot":"file:///",
+"sources":["/Users/kennygoff/Projects/weaponx/feint/lib/feint/system/FeintElectron.hx","/Users/kennygoff/Projects/weaponx/feint/lib/feint/assets/macros/ApplicationSettings.hx","/Users/kennygoff/haxe/versions/4.1.5/std/haxe/iterators/ArrayIterator.hx","/Users/kennygoff/haxe/haxe_libraries/hxnodejs/12.1.0/haxelib/src/js/node/KeyValue.hx","/Users/kennygoff/haxe/haxe_libraries/hxnodejs/12.1.0/haxelib/src/js/node/stream/Writable.hx","/Users/kennygoff/haxe/haxe_libraries/hxnodejs/12.1.0/haxelib/src/js/node/url/URLSearchParams.hx"],
+"names":[],
+"mappings":";;;;;;kCASE,WAAuB;AAAA,CACrB,qBAAqB,QAAO,YAAY;AAAA,EACtC,UAAU,gCAAkB,UCgCf,cAMA,sBDnCK,kBACL,wBACK,oBACG;AAPiB,EAUtC;AAVsC,EAWtC,OAAO,SAAQ,WACb;AAAA,SAAM;AAAN;AAZoC,EActC,aAAc;AAdwB,EAiBtC,gDAAM;AAjBgC;AADnB,CAsBrB,qBAAqB,oBAAmB,YACtC;AAAA,IAAI,qBAA0B,UAC5B;AAAA;AAAA;AADF;AAvBmB;mCEyBhB,gBAPT;AAAA,CAEmB,AAAlB,eAAkB;AAFnB,CASE,aAAa;AATf;;UAeS,WAEP;AAAA,SAAO,eAAU;AAAjB;QAMO,WAEP;AAAA,SAAO,WAAM;AAAb;;;2BCrBD,gBACC;AAAA,QAAO,MAAK;AAAZ;6BAGD,gBACC;AAAA,QAAO,MAAK;AAAZ;;gDCoTD,kBAAkF;AAAA,CACjF,EAAI,EAAC,qCAAiB,QAAS,UAE9B;AAAA,wBAAsB,QAAS,QAAS,QAAM,WAAW;AAAA,UAAO;AAAP;AAAzD;AAHgF,CAQjF,OAAO,AAAK;AARqE;;wCCzNlF;AAAA,aACQ,CAAC,KAAM;AADf;AAAA;4CAIA,gBACC;AAAA,QAAO,MAAK;AAAZ;6CAGD,gBACC;AAAA,QAAO,MAAK;AAAZ;;;;"
+}

@@ -1,0 +1,19 @@
+--library feint
+--class-path src
+-D feint:clean
+-D feint:appTitle=Micro Arcade
+--macro feint.assets.macros.AssetBuilder.buildElectron()
+--js build/electron/bin/main.js
+--main MicroAdventure
+-lib electron
+--debug
+
+--next
+
+--library feint
+-D feint:appWidth=640
+-D feint:appHeight=640
+-js build/electron/feint-electron.js
+-main feint.system.FeintElectron
+-lib electron
+--debug
