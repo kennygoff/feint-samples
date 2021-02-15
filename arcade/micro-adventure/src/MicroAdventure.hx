@@ -5,7 +5,7 @@ import feint.assets.macros.ApplicationSettings.ApplicationConfig;
 
 class MicroAdventure extends Application {
   override public function init() {
-    game.setInitialScene(new scenes.TitleScreenScene());
+    game.setInitialScene(new scenes.PlayScene());
   }
 
   static public function main() {
