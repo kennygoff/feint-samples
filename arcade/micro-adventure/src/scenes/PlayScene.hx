@@ -1,5 +1,7 @@
 package scenes;
 
+import feint.library.SpriteAnimationSystem;
+import player.PlayerAnimateSystem;
 import feint.library.MomentumSystem;
 import feint.library.VelocityComponent;
 import feint.library.SpriteRenderSystem;
@@ -21,10 +23,18 @@ class PlayScene extends Scene {
 
     camera.scale = 4;
 
-    var playerSprite = new Sprite(Assets.adventure_tiles__png);
-    playerSprite.textureHeight = 160;
-    playerSprite.textureWidth = 160;
-    playerSprite.setupSpriteSheetAnimation(16, 16, ["idle" => [0]]);
+    var playerSprite = new Sprite(Assets.adventure_player__png);
+    playerSprite.textureWidth = 384;
+    playerSprite.textureHeight = 16;
+    playerSprite.setupSpriteSheetAnimation(16, 16, [
+      "idle" => [0],
+      "move:right" => [0, 1, 2, 3],
+      "move:left" => [4, 5, 6, 7],
+      "attack:right" => [8, 9, 10, 11],
+      "attack:left" => [12, 13, 14, 15],
+      "attack:down" => [16, 17, 18, 19],
+      "attack:up" => [20, 21, 22, 23]
+    ]);
     playerSprite.animation.play('idle', 1, true);
 
     forge.addEntity(Entity.create(), [
@@ -32,10 +42,12 @@ class PlayScene extends Scene {
       new VelocityComponent(0, 0),
       new SpriteComponent(playerSprite),
       new PlayerActionsComponent()
-    ]);
+    ], ['player']);
     forge.addSystems([
       new PlayerActionsSystem(game.window.inputManager),
       new PlayerMovementSystem(),
+      new PlayerAnimateSystem(),
+      new SpriteAnimationSystem(),
       new MomentumSystem()
     ]);
     forge.addRenderSystems([new SpriteRenderSystem()]);
