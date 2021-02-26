@@ -1,5 +1,7 @@
 package scenes;
 
+import player.PlayerStateComponent;
+import player.PlayerCombatSystem;
 import feint.library.SpriteAnimationSystem;
 import player.PlayerAnimateSystem;
 import feint.library.MomentumSystem;
@@ -41,11 +43,13 @@ class PlayScene extends Scene {
       new PositionComponent(0, 0),
       new VelocityComponent(0, 0),
       new SpriteComponent(playerSprite),
-      new PlayerActionsComponent()
+      new PlayerActionsComponent(),
+      new PlayerStateComponent(),
     ], ['player']);
     forge.addSystems([
       new PlayerActionsSystem(game.window.inputManager),
       new PlayerMovementSystem(),
+      new PlayerCombatSystem(),
       new PlayerAnimateSystem(),
       new SpriteAnimationSystem(),
       new MomentumSystem()

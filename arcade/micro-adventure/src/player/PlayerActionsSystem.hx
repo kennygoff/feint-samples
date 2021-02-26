@@ -1,5 +1,6 @@
 package player;
 
+import player.PlayerStateComponent;
 import feint.input.device.Keyboard.KeyCode;
 import feint.input.InputManager;
 import player.PlayerActionsComponent;
@@ -9,7 +10,8 @@ import feint.forge.System;
 
 private typedef Shape = {
   id:EntityId,
-  actions:PlayerActionsComponent
+  actions:PlayerActionsComponent,
+  state:PlayerStateComponent
 }
 
 class PlayerActionsSystem extends System {
@@ -20,7 +22,7 @@ class PlayerActionsSystem extends System {
   }
 
   override function update(elapsed:Float, forge:Forge) {
-    var player = forge.getShapes([PlayerActionsComponent]).pop();
+    var player:Shape = forge.getShapes([PlayerActionsComponent, PlayerStateComponent]).pop();
     var actions = player.actions;
 
     actions.left = (
@@ -47,5 +49,15 @@ class PlayerActionsSystem extends System {
       inputManager.keyboard.keys[KeyCode.X] == Pressed ||
       inputManager.keyboard.keys[KeyCode.X] == JustPressed
     );
+
+    if (actions.left) {
+      player.state.facing = Left;
+    } else if (actions.right) {
+      player.state.facing = Right;
+    } else if (actions.up) {
+      player.state.facing = Up;
+    } else if (actions.down) {
+      player.state.facing = Down;
+    }
   }
 }
