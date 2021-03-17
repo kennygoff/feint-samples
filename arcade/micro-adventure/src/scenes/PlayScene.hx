@@ -1,5 +1,9 @@
 package scenes;
 
+import player.PlayerFollowCameraSystem;
+import worlds.MainWorldComponent;
+import tiles.TileComponent;
+import tiles.TileRenderSystem;
 import player.PlayerStateComponent;
 import player.PlayerCombatSystem;
 import feint.library.SpriteAnimationSystem;
@@ -25,6 +29,11 @@ class PlayScene extends Scene {
 
     camera.scale = 4;
 
+    var tileSprite = new Sprite(Assets.adventure_tiles__png);
+    tileSprite.textureWidth = 160;
+    tileSprite.textureHeight = 160;
+    tileSprite.alpha = 0;
+
     var playerSprite = new Sprite(Assets.adventure_player__png);
     playerSprite.textureWidth = 384;
     playerSprite.textureHeight = 16;
@@ -46,14 +55,27 @@ class PlayScene extends Scene {
       new PlayerActionsComponent(),
       new PlayerStateComponent(),
     ], ['player']);
+    for (y in 0...layer.cHei) {
+      for (x in 0...layer.cWid) {
+        if (layer.hasAnyTileAt(x, y)) {
+          forge.addEntity(Entity.create(), [
+            new SpriteComponent(tileSprite),
+            new PositionComponent(x * 16, y * 16),
+            new TileComponent(layer.getTileStackAt(x, y)[0].tileId),
+            new MainWorldComponent(world)
+          ]);
+        }
+      }
+    }
     forge.addSystems([
       new PlayerActionsSystem(game.window.inputManager),
       new PlayerMovementSystem(),
       new PlayerCombatSystem(),
       new PlayerAnimateSystem(),
       new SpriteAnimationSystem(),
-      new MomentumSystem()
+      new MomentumSystem(),
+      new PlayerFollowCameraSystem(camera, level.pxWid, level.pxHei),
     ]);
-    forge.addRenderSystems([new SpriteRenderSystem()]);
+    forge.addRenderSystems([new SpriteRenderSystem(), new TileRenderSystem()]);
   }
 }

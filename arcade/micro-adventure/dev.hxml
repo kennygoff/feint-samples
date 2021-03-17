@@ -5,4 +5,5 @@
 --js build/electron/bin/main.js
 --main MicroAdventure
 -lib electron
+-lib ldtk-haxe-api
 --debug

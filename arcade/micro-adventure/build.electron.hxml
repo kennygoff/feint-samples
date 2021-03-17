@@ -5,6 +5,7 @@
 --macro feint.assets.macros.AssetBuilder.buildElectron()
 --js build/electron/bin/main.js
 --main MicroAdventure
+-lib ldtk-haxe-api
 -lib electron
 --debug
 
