@@ -1,5 +1,10 @@
 package scenes;
 
+import worlds.WorldRigidBodySystem;
+import feint.utils.Point;
+import feint.physics.AABB;
+import feint.physics.RigidBodyComponent;
+import feint.library.HitboxComponent;
 import player.PlayerFollowCameraSystem;
 import worlds.MainWorldComponent;
 import tiles.TileComponent;
@@ -29,6 +34,10 @@ class PlayScene extends Scene {
 
     camera.scale = 4;
 
+    var world = new worlds.MainWorld();
+    var level = world.all_levels.Level;
+    var layer = level.l_Tiles;
+
     var tileSprite = new Sprite(Assets.adventure_tiles__png);
     tileSprite.textureWidth = 160;
     tileSprite.textureHeight = 160;
@@ -54,15 +63,24 @@ class PlayScene extends Scene {
       new SpriteComponent(playerSprite),
       new PlayerActionsComponent(),
       new PlayerStateComponent(),
+      new RigidBodyComponent(new AABB(new Point(8, 8), new Point(8, 8)), true, false)
     ], ['player']);
     for (y in 0...layer.cHei) {
       for (x in 0...layer.cWid) {
         if (layer.hasAnyTileAt(x, y)) {
+          var tileId = layer.getTileStackAt(x, y)[0].tileId;
           forge.addEntity(Entity.create(), [
             new SpriteComponent(tileSprite),
             new PositionComponent(x * 16, y * 16),
-            new TileComponent(layer.getTileStackAt(x, y)[0].tileId),
-            new MainWorldComponent(world)
+            new TileComponent(tileId),
+            new MainWorldComponent(world),
+            new RigidBodyComponent(
+              new AABB(new Point(x * 16 + 8, y * 16 + 8), new Point(8, 8)),
+              [40, 41, 42, 43, 44, 45, 50, 52, 53, 55, 60, 62, 63, 65, 70, 72, 73, 75].indexOf(
+                tileId
+              ) != -1,
+              true
+            )
           ]);
         }
       }
@@ -73,7 +91,7 @@ class PlayScene extends Scene {
       new PlayerCombatSystem(),
       new PlayerAnimateSystem(),
       new SpriteAnimationSystem(),
-      new MomentumSystem(),
+      new WorldRigidBodySystem(),
       new PlayerFollowCameraSystem(camera, level.pxWid, level.pxHei),
     ]);
     forge.addRenderSystems([new SpriteRenderSystem(), new TileRenderSystem()]);
