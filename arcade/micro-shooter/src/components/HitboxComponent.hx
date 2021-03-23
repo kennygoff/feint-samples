@@ -44,10 +44,8 @@ class HitboxDebugRenderSystem extends RenderSystem {
         Math.floor(object.position.y + object.hitbox.y),
         Math.floor(object.hitbox.width),
         Math.floor(object.hitbox.height),
-        {
-          stroke: object.labels.length > 0 ? colors[object.labels[0]] : defaultColor,
-          strokeWidth: 2,
-        }
+        0,
+        object.labels.length > 0 ? colors[object.labels[0]] : defaultColor
       );
     }
   }

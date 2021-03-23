@@ -1,0 +1,20 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "[Arcade] Micro Adventure (Electron)",
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
+      "runtimeArgs": [
+        "${workspaceRoot}/build/electron/feint-electron.js",
+        "--remote-debugging-port=9222"
+      ],
+      "webRoot": "${workspaceRoot}/build/electron",
+      "preLaunchTask": "[Arcade] Build Micro Adventure (Electron)"
+    }
+  ]
+}

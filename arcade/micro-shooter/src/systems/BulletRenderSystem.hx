@@ -25,9 +25,8 @@ class BulletRenderSystem extends RenderSystem {
         Math.floor(bullet.position.y),
         Math.floor(bullet.hitbox.width),
         Math.floor(bullet.hitbox.height),
-        {
-          color: 0xFFFFFFFF
-        }
+        0,
+        0xFFFFFFFF
       );
     }
   }

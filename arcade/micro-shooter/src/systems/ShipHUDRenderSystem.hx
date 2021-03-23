@@ -52,18 +52,16 @@ class ShipHUDRenderSystem extends RenderSystem {
       healthUI.position.y - (1 * 2),
       64 * 2 + (2 * 2),
       16 * 2 + (2 * 2),
-      {
-        color: 0xFF000000
-      }
+      0,
+      0xFF000000
     );
     renderer.drawRect(
       shieldUI.position.x - (1 * 2),
       shieldUI.position.y - (1 * 2),
       64 * 2 + (2 * 2),
       16 * 2 + (2 * 2),
-      {
-        color: 0xFF000000
-      }
+      0,
+      0xFF000000
     );
     healthUI.sprite.sprite.drawAt(healthUI.position.x, healthUI.position.y, renderer, 2);
     shieldUI.sprite.sprite.drawAt(shieldUI.position.x, shieldUI.position.y, renderer, 2);

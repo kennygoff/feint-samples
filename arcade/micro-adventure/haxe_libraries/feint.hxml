@@ -1,0 +1,3 @@
+# @install: lix --silent download "haxelib:/feint#0.2.0" into feint/0.2.0/haxelib
+-cp /Users/kennygoff/Projects/weaponx/feint/lib
+-D feint=0.2.0
